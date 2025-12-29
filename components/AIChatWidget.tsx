@@ -18,6 +18,7 @@ const AIChatWidget: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const chatSession = useRef<Chat | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const lastScrollTop = useRef<number>(0);
 
   useEffect(() => {
     if (isOpen && !chatSession.current) {
@@ -25,10 +26,20 @@ const AIChatWidget: React.FC = () => {
     }
   }, [isOpen]);
 
+  // Enhanced auto-scroll logic
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({
-        top: scrollRef.current.scrollHeight,
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 150;
+    
+    // Always scroll if the last message is from the user (they just sent something)
+    // or if we were already near the bottom
+    const lastMessageIsUser = messages[messages.length - 1]?.role === 'user';
+
+    if (isNearBottom || lastMessageIsUser || isTyping) {
+      container.scrollTo({
+        top: container.scrollHeight,
         behavior: 'smooth'
       });
     }
@@ -85,21 +96,19 @@ const AIChatWidget: React.FC = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-[100] font-sans">
-      {/* High-Impact Floating Toggle Button - Enhanced for "Pop" */}
+      {/* High-Impact Floating Toggle Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
           className="group relative flex items-center bg-safety-orange text-white p-5 rounded-full shadow-[0_20px_50px_rgba(255,133,27,0.6)] transition-all hover:scale-110 active:scale-95 border-2 border-white/30"
           aria-label="Open AI Chat Assistant"
         >
-          {/* Constant pulse for attention */}
           <div className="absolute inset-0 rounded-full bg-safety-orange animate-ping opacity-30 -z-10"></div>
           
           <svg className="w-8 h-8 drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
           </svg>
 
-          {/* Label with visibility animation */}
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-3 transition-all duration-300 font-black uppercase text-sm whitespace-nowrap tracking-[0.2em]">
             Chat with AI
           </span>
@@ -140,16 +149,16 @@ const AIChatWidget: React.FC = () => {
           {/* Messages Area */}
           <div 
             ref={scrollRef}
-            className="flex-grow overflow-y-auto p-6 space-y-5 bg-gradient-to-b from-gray-50 to-white"
+            className="flex-grow overflow-y-auto p-6 space-y-5 bg-gradient-to-b from-gray-50 to-white scroll-smooth"
             aria-live="polite"
           >
             {messages.map((msg, i) => (
               <div 
                 key={i} 
-                className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'} animate-fadeIn`}
+                className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'} animate-fade-in-up delay-100`}
               >
                 <div 
-                  className={`max-w-[88%] p-4 rounded-2xl text-sm shadow-sm leading-relaxed ${
+                  className={`max-w-[88%] p-4 rounded-2xl text-sm shadow-sm leading-relaxed transition-all duration-300 ${
                     msg.role === 'user' 
                       ? 'bg-navy text-white rounded-tr-none' 
                       : 'bg-white text-navy border border-gray-200 rounded-tl-none font-medium'
@@ -160,7 +169,7 @@ const AIChatWidget: React.FC = () => {
                 {msg.isAction && (
                   <button 
                     onClick={triggerAssessmentAction}
-                    className="mt-3 bg-safety-orange text-white px-6 py-3 rounded-2xl text-xs font-black shadow-lg hover:bg-orange-600 transition-all flex items-center space-x-3 group active:scale-95"
+                    className="mt-3 bg-safety-orange text-white px-6 py-3 rounded-2xl text-xs font-black shadow-lg hover:bg-orange-600 transition-all flex items-center space-x-3 group active:scale-95 animate-fade-in delay-300"
                   >
                     <span className="uppercase tracking-widest">Begin Assessment</span>
                     <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -172,7 +181,7 @@ const AIChatWidget: React.FC = () => {
             ))}
             
             {isTyping && (
-              <div className="flex flex-col space-y-2 animate-fadeIn pb-4">
+              <div className="flex flex-col space-y-2 animate-fade-in-up pb-4">
                 <div className="flex items-center space-x-2 ml-1">
                    <span className="text-[10px] text-gray-400 font-black uppercase tracking-[0.2em]">Eco-Advisor is typing</span>
                    <span className="flex space-x-1">
