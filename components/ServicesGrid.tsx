@@ -48,9 +48,9 @@ const ServicesGrid: React.FC = () => {
           {services.map((service, index) => (
             <div 
               key={index}
-              className={`p-8 rounded-2xl transition duration-300 border ${
+              className={`p-8 rounded-2xl transition duration-300 border flex flex-col ${
                 service.highlight 
-                ? 'bg-navy text-white shadow-2xl border-navy relative scale-105' 
+                ? 'bg-navy text-white shadow-2xl border-navy relative scale-105 z-10' 
                 : 'bg-white border-gray-100 hover:border-safety-orange hover:shadow-xl'
               }`}
             >
@@ -70,17 +70,17 @@ const ServicesGrid: React.FC = () => {
                 {service.tag}
               </span>
               <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-              <p className={service.highlight ? 'text-gray-300' : 'text-gray-600'}>
+              <p className={`flex-grow ${service.highlight ? 'text-gray-300' : 'text-gray-600'}`}>
                 {service.description}
               </p>
-              <button className={`mt-8 font-bold flex items-center group ${
+              <a href="#contact" className={`mt-8 font-bold flex items-center group transition ${
                 service.highlight ? 'text-white hover:text-safety-orange' : 'text-navy hover:text-safety-orange'
               }`}>
                 Learn More 
                 <svg className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </button>
+              </a>
             </div>
           ))}
         </div>

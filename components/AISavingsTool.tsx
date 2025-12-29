@@ -141,9 +141,9 @@ const AISavingsTool: React.FC = () => {
                     <h3 className="text-2xl font-bold text-navy">Your Assessment Report</h3>
                     <button 
                       onClick={() => setReport(null)}
-                      className="text-gray-400 hover:text-navy"
+                      className="text-gray-400 hover:text-navy text-sm font-bold uppercase tracking-widest"
                     >
-                      Reset
+                      Reset Form
                     </button>
                   </div>
                   <div className="grid grid-cols-1 gap-6">
@@ -167,9 +167,9 @@ const AISavingsTool: React.FC = () => {
                       "Expert Tip: {report.proTip}"
                     </div>
                   </div>
-                  <button className="w-full mt-8 bg-safety-orange text-white font-bold py-4 rounded-xl hover:bg-orange-600 transition shadow-lg">
+                  <a href="#contact" className="block w-full text-center mt-8 bg-safety-orange text-white font-bold py-4 rounded-xl hover:bg-orange-600 transition shadow-lg">
                     Speak with an Expert About This Report
-                  </button>
+                  </a>
                 </div>
               )}
             </div>
