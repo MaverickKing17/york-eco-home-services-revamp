@@ -24,9 +24,13 @@ const AIChatWidget: React.FC = () => {
     }
   }, [isOpen]);
 
+  // Use smooth scroll when messages or typing status changes
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
     }
   }, [messages, isTyping]);
 
@@ -37,6 +41,8 @@ const AIChatWidget: React.FC = () => {
     const userMessage = input.trim();
     setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
     setInput('');
+    
+    // Start typing indicator
     setIsTyping(true);
 
     try {
@@ -45,7 +51,7 @@ const AIChatWidget: React.FC = () => {
       const botText = response.text || "I'm sorry, I couldn't process that. Please call us at 1-888-227-6566 for immediate assistance.";
       setMessages(prev => [...prev, { role: 'model', text: botText }]);
     } catch (err) {
-      setMessages(prev => [...prev, { role: 'model', text: "Service temporarily unavailable. Please call us for 24/7 support." }]);
+      setMessages(prev => [...prev, { role: 'model', text: "Service temporarily unavailable. Please call us for 24/7 support at 1-888-227-6566." }]);
     } finally {
       setIsTyping(false);
     }
@@ -69,7 +75,7 @@ const AIChatWidget: React.FC = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="bg-white w-[350px] sm:w-[400px] h-[500px] rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-gray-100 animate-fadeInUp">
+        <div className="bg-white w-[350px] sm:w-[400px] h-[550px] rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-gray-100 animate-fade-in-up">
           {/* Header */}
           <div className="bg-navy p-4 flex justify-between items-center text-white">
             <div className="flex items-center space-x-3">
@@ -103,10 +109,10 @@ const AIChatWidget: React.FC = () => {
             {messages.map((msg, i) => (
               <div 
                 key={i} 
-                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}
               >
                 <div 
-                  className={`max-w-[85%] p-3 rounded-2xl text-sm shadow-sm ${
+                  className={`max-w-[85%] p-3 rounded-2xl text-sm shadow-sm leading-relaxed ${
                     msg.role === 'user' 
                       ? 'bg-safety-orange text-white rounded-tr-none' 
                       : 'bg-white text-navy border border-gray-100 rounded-tl-none'
@@ -116,13 +122,18 @@ const AIChatWidget: React.FC = () => {
                 </div>
               </div>
             ))}
+            
+            {/* Visual Typing Indicator */}
             {isTyping && (
-              <div className="flex justify-start">
-                <div className="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm flex space-x-1">
-                  <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce"></div>
-                  <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce delay-100"></div>
-                  <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce delay-200"></div>
+              <div className="flex flex-col space-y-1 animate-fadeIn">
+                <div className="flex justify-start">
+                  <div className="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm flex space-x-1.5 items-center">
+                    <div className="w-1.5 h-1.5 bg-safety-orange rounded-full animate-bounce"></div>
+                    <div className="w-1.5 h-1.5 bg-safety-orange rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                    <div className="w-1.5 h-1.5 bg-safety-orange rounded-full animate-bounce [animation-delay:0.4s]"></div>
+                  </div>
                 </div>
+                <span className="text-[10px] text-gray-400 font-medium ml-1">Eco-Assistant is typing...</span>
               </div>
             )}
           </div>
@@ -136,14 +147,14 @@ const AIChatWidget: React.FC = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your question..."
-              className="flex-grow p-3 bg-gray-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-navy outline-none"
+              placeholder="How can I help?"
+              className="flex-grow p-3 bg-gray-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-navy outline-none transition-all"
               disabled={isTyping}
             />
             <button 
               type="submit"
               disabled={isTyping || !input.trim()}
-              className="bg-navy text-white p-3 rounded-xl hover:bg-slate-800 disabled:opacity-50 transition shadow-md"
+              className="bg-navy text-white p-3 rounded-xl hover:bg-slate-800 disabled:opacity-50 transition shadow-md active:scale-95"
               aria-label="Send message"
             >
               <svg className="w-5 h-5 transform rotate-90" fill="currentColor" viewBox="0 0 24 24">
