@@ -34,42 +34,43 @@ const trustItems = [
     ),
     label: "24/7 Support",
     subLabel: "Emergency Service"
+  },
+  {
+    icon: (
+      <div className="bg-navy text-white p-2 rounded shadow-sm group-hover:shadow-md transition-shadow">
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+      </div>
+    ),
+    label: "HRAI Member",
+    subLabel: "Industry Standard"
   }
 ];
 
 const TrustBar: React.FC = () => {
   return (
-    <div className="bg-white border-b py-8 overflow-hidden">
+    <div className="bg-white border-b py-10 overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap justify-center md:justify-between items-center gap-8 md:gap-4 group/bar">
+        <div className="flex flex-wrap justify-center lg:justify-between items-center gap-8 md:gap-12">
           {trustItems.map((item, index) => (
             <div 
               key={index} 
-              className="flex items-center space-x-3 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 group cursor-default grayscale hover:grayscale-0 opacity-60 hover:opacity-100"
+              className="flex items-center space-x-4 transition-all duration-300 transform hover:-translate-y-1 group cursor-default"
             >
-              {item.icon}
+              <div className="flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
+                {item.icon}
+              </div>
               <div className="leading-tight">
-                <span className="block font-bold text-navy transition-colors group-hover:text-navy">
+                <span className="block font-bold text-navy text-base tracking-tight transition-colors group-hover:text-safety-orange">
                   {item.label}
                 </span>
-                <span className="text-xs uppercase font-semibold text-gray-500 transition-colors group-hover:text-gray-700">
+                <span className="text-[10px] uppercase font-black text-gray-400 tracking-widest transition-colors group-hover:text-navy">
                   {item.subLabel}
                 </span>
               </div>
             </div>
           ))}
-          
-          <div className="hidden lg:flex items-center transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 grayscale hover:grayscale-0 opacity-60 hover:opacity-100 cursor-default">
-            {/* Replaced broken HRAI logo with a reliable professional icon placeholder for Association membership */}
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
-                 <svg className="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                 </svg>
-              </div>
-              <span className="text-sm font-bold text-gray-600">HRAI Member</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>

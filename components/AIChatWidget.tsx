@@ -34,11 +34,36 @@ const AIChatWidget: React.FC = () => {
     }
   }, [messages, isTyping]);
 
+  const triggerAssessmentAction = () => {
+    const toolSection = document.getElementById('ai-tool');
+    if (toolSection) {
+      toolSection.scrollIntoView({ behavior: 'smooth' });
+      // Find the first input or select in the tool and focus it
+      const firstInput = toolSection.querySelector('select, input') as HTMLElement;
+      if (firstInput) {
+        setTimeout(() => firstInput.focus(), 800);
+      }
+    }
+    setIsOpen(false);
+  };
+
   const handleSend = async (e?: React.FormEvent) => {
     e?.preventDefault();
     if (!input.trim() || isTyping) return;
 
     const userMessage = input.trim();
+    const lowerMessage = userMessage.toLowerCase();
+    
+    // 1. Check for explicit "Start Assessment" intent client-side for instant feedback
+    const explicitStartKeywords = ['start assessment', 'run assessment', 'open tool', 'start the tool', 'begin assessment'];
+    if (explicitStartKeywords.some(kw => lowerMessage.includes(kw))) {
+      setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
+      setMessages(prev => [...prev, { role: 'model', text: 'Certainly! Opening the Home Energy Savings Assessment tool for you now...' }]);
+      setInput('');
+      setTimeout(triggerAssessmentAction, 1500);
+      return;
+    }
+
     setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
     setInput('');
     setIsTyping(true);
@@ -50,17 +75,23 @@ const AIChatWidget: React.FC = () => {
       let botText = response.text || "";
       let hasAction = false;
 
-      // Check for tool calls
+      // 2. Proactive Keyword Check (Client-side fallback/reinforcement)
+      const proactiveKeywords = ['savings', 'rebate', 'efficiency', 'rebates', 'save money', 'government grant', 'incentive'];
+      const matchesProactive = proactiveKeywords.some(kw => lowerMessage.includes(kw));
+
+      // Check for AI tool calls
       if (response.functionCalls && response.functionCalls.length > 0) {
         for (const fc of response.functionCalls) {
           if (fc.name === 'startSavingsAssessment') {
             hasAction = true;
-            // Send feedback back to model to update context
             await chatSession.current.sendMessage({ 
               message: "Tool suggested to user: startSavingsAssessment" 
             });
           }
         }
+      } else if (matchesProactive) {
+        // If the AI didn't explicitly call the tool but keywords matched, we force the action button
+        hasAction = true;
       }
 
       if (botText) {
@@ -70,7 +101,7 @@ const AIChatWidget: React.FC = () => {
       if (hasAction) {
         setMessages(prev => [...prev, { 
           role: 'model', 
-          text: 'I recommend using our Savings Assessment tool for precise estimates.', 
+          text: 'Would you like to run our interactive Savings Assessment for your specific home?', 
           isAction: true 
         }]);
       }
@@ -152,10 +183,7 @@ const AIChatWidget: React.FC = () => {
                 </div>
                 {msg.isAction && (
                   <button 
-                    onClick={() => {
-                      window.location.hash = '#ai-tool';
-                      setIsOpen(false);
-                    }}
+                    onClick={triggerAssessmentAction}
                     className="mt-2 bg-safety-orange text-white px-4 py-2 rounded-xl text-xs font-bold shadow-md hover:bg-orange-600 transition-colors flex items-center space-x-2 group"
                   >
                     <span>Begin Free Assessment</span>
@@ -190,7 +218,7 @@ const AIChatWidget: React.FC = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="How can I help?"
+              placeholder="Ask about rebates or savings..."
               className="flex-grow p-3 bg-gray-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-navy outline-none transition-all"
               disabled={isTyping}
             />
