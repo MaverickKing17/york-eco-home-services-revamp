@@ -14,8 +14,8 @@ const Footer: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <span className="text-xl font-extrabold tracking-tight block leading-none">YORK ECO</span>
-                <span className="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Home Services Inc.</span>
+                <span className="text-xl font-extrabold tracking-tight block leading-none">YORK ECO-HOME</span>
+                <span className="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Services Inc.</span>
               </div>
             </a>
             <p className="text-gray-400 leading-relaxed mb-6">
@@ -76,7 +76,7 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-          <p>© 2024 York Eco Home Services Inc. All rights reserved.</p>
+          <p>© 2024 York Eco-Home Services Inc. All rights reserved.</p>
           <div className="flex space-x-6">
             <a href="#contact" className="hover:text-white transition">Privacy Policy</a>
             <a href="#contact" className="hover:text-white transition">Terms of Service</a>

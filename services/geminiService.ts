@@ -26,9 +26,9 @@ const startSavingsAssessmentDeclaration: FunctionDeclaration = {
 };
 
 const COMPANY_KNOWLEDGE = `
-You are the official AI Assistant for York Eco Home Services Inc. 
+You are the official AI Assistant for York Eco-Home Services Inc. 
 Company Details:
-- Name: York Eco Home Services Inc.
+- Name: York Eco-Home Services Inc.
 - Phone: 1-888-227-6566
 - Address: 1370 Don Mills Rd, Unit #300, Toronto, ON M3B 3N7
 - Licensing: TSSA License FS-R-50611.

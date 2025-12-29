@@ -10,15 +10,15 @@ const Navbar: React.FC = () => {
   return (
     <nav className="fixed w-full z-50 bg-white shadow-sm py-4" aria-label="Main Navigation">
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <a href="#" className="flex items-center space-x-2 focus-visible:outline-navy" onClick={closeMenu} aria-label="York Eco Home Services - Home">
+        <a href="#" className="flex items-center space-x-2 focus-visible:outline-navy" onClick={closeMenu} aria-label="York Eco-Home Services - Home">
           <div className="w-10 h-10 bg-navy rounded-lg flex items-center justify-center" aria-hidden="true">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.5-7 3 3 3 6 3 6s.5-1 2-3c1.5 2 1.5 5 1.5 5s2-4 4-4a8 8 0 01-1.343 11.657z" />
             </svg>
           </div>
           <div>
-            <span className="text-xl font-extrabold text-navy tracking-tight block leading-none">YORK ECO</span>
-            <span className="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Home Services Inc.</span>
+            <span className="text-xl font-extrabold text-navy tracking-tight block leading-none">YORK ECO-HOME</span>
+            <span className="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Services Inc.</span>
           </div>
         </a>
         

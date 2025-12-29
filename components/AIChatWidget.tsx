@@ -172,12 +172,20 @@ const AIChatWidget: React.FC = () => {
             ))}
             
             {isTyping && (
-              <div className="flex flex-col space-y-1 animate-fadeIn">
+              <div className="flex flex-col space-y-2 animate-fadeIn pb-4">
+                <div className="flex items-center space-x-2 ml-1">
+                   <span className="text-[10px] text-gray-400 font-black uppercase tracking-[0.2em]">Eco-Advisor is typing</span>
+                   <span className="flex space-x-1">
+                      <span className="w-1 h-1 bg-gray-300 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                      <span className="w-1 h-1 bg-gray-300 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                      <span className="w-1 h-1 bg-gray-300 rounded-full animate-bounce"></span>
+                   </span>
+                </div>
                 <div className="flex justify-start">
                   <div className="bg-white border border-gray-100 p-4 rounded-2xl rounded-tl-none shadow-sm flex space-x-1.5 items-center">
-                    <div className="w-2 h-2 bg-safety-orange rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                    <div className="w-2 h-2 bg-safety-orange rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                    <div className="w-2 h-2 bg-safety-orange rounded-full animate-bounce"></div>
+                    <div className="w-2.5 h-2.5 bg-safety-orange rounded-full animate-pulse [animation-duration:1s]"></div>
+                    <div className="w-2.5 h-2.5 bg-safety-orange/60 rounded-full animate-pulse [animation-delay:0.2s] [animation-duration:1s]"></div>
+                    <div className="w-2.5 h-2.5 bg-safety-orange/30 rounded-full animate-pulse [animation-delay:0.4s] [animation-duration:1s]"></div>
                   </div>
                 </div>
               </div>
