@@ -9,6 +9,7 @@ import AISavingsTool from './components/AISavingsTool';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 import MobileStickyCall from './components/MobileStickyCall';
+import AIChatWidget from './components/AIChatWidget';
 
 const App: React.FC = () => {
   return (
@@ -34,6 +35,7 @@ const App: React.FC = () => {
       </main>
       <Footer />
       <MobileStickyCall />
+      <AIChatWidget />
     </div>
   );
 };

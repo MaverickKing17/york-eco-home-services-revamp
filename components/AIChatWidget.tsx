@@ -1,0 +1,163 @@
+
+import React, { useState, useRef, useEffect } from 'react';
+import { startAIChatSession } from '../services/geminiService';
+import { Chat } from '@google/genai';
+
+interface Message {
+  role: 'user' | 'model';
+  text: string;
+}
+
+const AIChatWidget: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([
+    { role: 'model', text: 'Hi! I\'m your York Eco Energy Assistant. How can I help you save on home comfort today?' }
+  ]);
+  const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const chatSession = useRef<Chat | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isOpen && !chatSession.current) {
+      chatSession.current = startAIChatSession();
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages, isTyping]);
+
+  const handleSend = async (e?: React.FormEvent) => {
+    e?.preventDefault();
+    if (!input.trim() || isTyping) return;
+
+    const userMessage = input.trim();
+    setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
+    setInput('');
+    setIsTyping(true);
+
+    try {
+      if (!chatSession.current) chatSession.current = startAIChatSession();
+      const response = await chatSession.current.sendMessage({ message: userMessage });
+      const botText = response.text || "I'm sorry, I couldn't process that. Please call us at 1-888-227-6566 for immediate assistance.";
+      setMessages(prev => [...prev, { role: 'model', text: botText }]);
+    } catch (err) {
+      setMessages(prev => [...prev, { role: 'model', text: "Service temporarily unavailable. Please call us for 24/7 support." }]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  return (
+    <div className="fixed bottom-6 right-6 z-[100] font-sans">
+      {/* Floating Toggle Button */}
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="bg-navy text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform relative group focus-visible:ring-4 focus-visible:ring-safety-orange"
+          aria-label="Open AI Chat Assistant"
+        >
+          <div className="absolute inset-0 rounded-full bg-navy animate-ping opacity-25 group-hover:hidden"></div>
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+          </svg>
+        </button>
+      )}
+
+      {/* Chat Window */}
+      {isOpen && (
+        <div className="bg-white w-[350px] sm:w-[400px] h-[500px] rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-gray-100 animate-fadeInUp">
+          {/* Header */}
+          <div className="bg-navy p-4 flex justify-between items-center text-white">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-safety-orange" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-bold text-sm leading-none">Eco-Assistant</h3>
+                <span className="text-[10px] text-green-400 font-bold uppercase tracking-widest">● Online Now</span>
+              </div>
+            </div>
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="hover:bg-white/10 p-2 rounded-lg transition"
+              aria-label="Close Chat"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Messages Area */}
+          <div 
+            ref={scrollRef}
+            className="flex-grow overflow-y-auto p-4 space-y-4 bg-gray-50/50"
+            aria-live="polite"
+          >
+            {messages.map((msg, i) => (
+              <div 
+                key={i} 
+                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div 
+                  className={`max-w-[85%] p-3 rounded-2xl text-sm shadow-sm ${
+                    msg.role === 'user' 
+                      ? 'bg-safety-orange text-white rounded-tr-none' 
+                      : 'bg-white text-navy border border-gray-100 rounded-tl-none'
+                  }`}
+                >
+                  {msg.text}
+                </div>
+              </div>
+            ))}
+            {isTyping && (
+              <div className="flex justify-start">
+                <div className="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm flex space-x-1">
+                  <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce"></div>
+                  <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce delay-100"></div>
+                  <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce delay-200"></div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Input Area */}
+          <form 
+            onSubmit={handleSend}
+            className="p-4 bg-white border-t border-gray-100 flex items-center space-x-2"
+          >
+            <input 
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type your question..."
+              className="flex-grow p-3 bg-gray-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-navy outline-none"
+              disabled={isTyping}
+            />
+            <button 
+              type="submit"
+              disabled={isTyping || !input.trim()}
+              className="bg-navy text-white p-3 rounded-xl hover:bg-slate-800 disabled:opacity-50 transition shadow-md"
+              aria-label="Send message"
+            >
+              <svg className="w-5 h-5 transform rotate-90" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+              </svg>
+            </button>
+          </form>
+          <div className="bg-gray-50 px-4 py-2 text-[10px] text-center text-gray-400 font-medium border-t border-gray-100">
+            Powered by Gemini AI • Toronto Trusted Expert
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AIChatWidget;
