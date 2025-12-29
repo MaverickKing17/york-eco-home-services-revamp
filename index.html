@@ -51,6 +51,19 @@
       .delay-300 { animation-delay: 300ms; }
       .delay-400 { animation-delay: 400ms; }
       .delay-500 { animation-delay: 500ms; }
+
+      /* Accessibility: Visible Focus Rings */
+      :focus-visible {
+        outline: 2px solid #FF851B;
+        outline-offset: 4px;
+        border-radius: 4px;
+      }
+
+      /* Tailwind focus styles sometimes need overrides for specific components */
+      .focus-ring:focus-visible {
+        box-shadow: 0 0 0 2px white, 0 0 0 4px #FF851B;
+        outline: none;
+      }
     </style>
   <script type="importmap">
 {
