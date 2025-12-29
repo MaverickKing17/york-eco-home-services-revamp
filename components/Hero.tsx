@@ -2,6 +2,19 @@
 import React from 'react';
 
 const Hero: React.FC = () => {
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      const navbarHeight = 88;
+      const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <section className="relative pt-32 pb-24 overflow-hidden bg-navy min-h-[95vh] flex items-center" aria-labelledby="hero-heading">
       {/* High-Relevance Background: Trusted Professional Technician */}
@@ -62,6 +75,7 @@ const Hero: React.FC = () => {
 
             <a 
               href="#rebates" 
+              onClick={(e) => scrollToSection(e, 'rebates')}
               className="bg-safety-orange text-white text-center px-10 py-5 rounded-3xl font-black text-lg hover-safety-orange transition-all duration-500 transform hover:-translate-y-2 hover:shadow-[0_20px_50px_-15px_rgba(255,133,27,0.7)] active:scale-95 flex items-center justify-center space-x-4 group order-1 sm:order-2"
             >
               <span>Secure Rebates</span>
