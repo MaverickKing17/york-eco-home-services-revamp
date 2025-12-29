@@ -1,0 +1,7 @@
+{
+  "name": "York Eco Home Services - Premium HVAC",
+  "description": "A high-converting, premium React application for York Eco Home Services Inc., featuring an AI-powered home efficiency savings consultant.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
