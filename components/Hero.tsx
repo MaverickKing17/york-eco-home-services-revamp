@@ -65,9 +65,7 @@ const Hero: React.FC = () => {
               href="tel:18882276566" 
               className="group relative flex items-center bg-safety-orange px-8 py-5 rounded-full transition-all duration-300 hover:bg-orange-600 hover:shadow-[0_20px_40px_-5px_rgba(255,133,27,0.5)] shadow-2xl active:scale-95 overflow-hidden"
             >
-              {/* Dynamic hover pulse overlay */}
               <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              
               <div className="bg-white/20 p-2.5 rounded-xl shadow-inner group-hover:scale-110 transition-transform duration-300 mr-5">
                 <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -91,19 +89,27 @@ const Hero: React.FC = () => {
             </a>
           </div>
 
-          {/* Local Stats */}
-          <div className="grid grid-cols-3 gap-12 animate-fade-in-up delay-400 border-t border-white/10 pt-10 w-fit">
-            <div className="text-right">
-              <div className="text-3xl font-black text-white leading-none">5/5</div>
-              <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-2">HomeStars Rated</div>
-            </div>
-            <div className="text-right">
-              <div className="text-3xl font-black text-safety-orange leading-none">24H</div>
-              <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-2">GTA Emergency</div>
-            </div>
-            <div className="text-right">
-              <div className="text-3xl font-black text-white leading-none">15k+</div>
-              <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-2">Eco Installs</div>
+          {/* Local Stats - Enhanced Visibility Version */}
+          <div className="animate-fade-in-up delay-400 w-full sm:w-auto">
+            <div className="bg-navy/40 backdrop-blur-2xl border border-white/20 rounded-[2.5rem] p-8 md:p-10 shadow-2xl inline-grid grid-cols-3 gap-8 md:gap-16">
+              <div className="text-right group">
+                <div className="text-4xl md:text-5xl font-black text-white leading-none mb-3 drop-shadow-md group-hover:scale-110 transition-transform cursor-default">5/5</div>
+                <div className="text-[11px] md:text-[13px] font-black text-white/90 uppercase tracking-[0.15em] leading-tight drop-shadow-sm">
+                  HomeStars <br/> Rated
+                </div>
+              </div>
+              <div className="text-right group border-x border-white/10 px-8 md:px-16">
+                <div className="text-4xl md:text-5xl font-black text-safety-orange leading-none mb-3 drop-shadow-md group-hover:scale-110 transition-transform cursor-default">24H</div>
+                <div className="text-[11px] md:text-[13px] font-black text-white/90 uppercase tracking-[0.15em] leading-tight drop-shadow-sm">
+                  GTA <br/> Emergency
+                </div>
+              </div>
+              <div className="text-right group">
+                <div className="text-4xl md:text-5xl font-black text-white leading-none mb-3 drop-shadow-md group-hover:scale-110 transition-transform cursor-default">15k+</div>
+                <div className="text-[11px] md:text-[13px] font-black text-white/90 uppercase tracking-[0.15em] leading-tight drop-shadow-sm">
+                  Eco <br/> Installs
+                </div>
+              </div>
             </div>
           </div>
         </div>
