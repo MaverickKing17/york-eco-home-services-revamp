@@ -15,18 +15,6 @@ const trustItems = [
   },
   {
     icon: (
-      <div className="bg-navy text-white p-2.5 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300 border border-white/20">
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-        </svg>
-      </div>
-    ),
-    label: "TSSA Licensed",
-    subLabel: "LICENSE FS-R-50611",
-    isHighContrast: true
-  },
-  {
-    icon: (
       <div className="bg-green-600 text-white p-2.5 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -51,22 +39,52 @@ const trustItems = [
 
 const TrustBar: React.FC = () => {
   return (
-    <section className="bg-white py-12 border-b border-gray-100" aria-label="Company Credentials">
+    <section className="bg-white py-14 border-b border-gray-100" aria-label="Company Credentials">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col xl:flex-row items-center justify-between gap-12">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           
-          {/* Brand & Safety Statement - Fixed Alignment */}
-          <div className="max-w-md text-center xl:text-left">
+          {/* Brand & Safety Statement */}
+          <div className="max-w-md text-center lg:text-left">
             <h2 className="text-navy text-2xl font-black uppercase tracking-tight mb-3">
               York Eco-Home Services
             </h2>
-            <p className="text-gray-500 font-medium text-sm leading-relaxed max-w-sm mx-auto xl:mx-0">
-              Every installation and repair is backed by the GTA's most rigorous safety standards and certifications.
+            <p className="text-gray-500 font-medium text-sm leading-relaxed max-w-sm mx-auto lg:mx-0">
+              Licensed professionals dedicated to GTA safety standards. Every repair is TSSA-verified.
             </p>
           </div>
 
-          {/* Badge Grid - Organized and Structured */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-8 w-full xl:w-auto">
+          {/* High-Impact TSSA Badge (Standalone for maximum visibility) */}
+          <div className="order-first lg:order-none mb-4 lg:mb-0">
+            <div className="relative group cursor-pointer transform hover:scale-105 transition-all duration-300">
+              {/* Outer Glow Effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-safety-orange to-navy rounded-full blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+              
+              {/* Glass Pill Component - Matching User Screenshot */}
+              <div className="relative flex items-center bg-navy/90 backdrop-blur-md px-8 py-4 rounded-full border border-white/20 shadow-2xl">
+                {/* Pulsing Status Indicator */}
+                <div className="flex items-center space-x-2 mr-6">
+                  <div className="relative w-3 h-3">
+                    <div className="absolute inset-0 bg-safety-orange rounded-full animate-ping opacity-75"></div>
+                    <div className="relative w-3 h-3 bg-safety-orange rounded-full border-2 border-white shadow-[0_0_10px_rgba(255,133,27,0.8)]"></div>
+                  </div>
+                  <span className="text-white font-black text-[14px] tracking-[0.15em] uppercase whitespace-nowrap">
+                    TSSA Licensed
+                  </span>
+                </div>
+                
+                {/* Vertical Separator */}
+                <div className="w-[1px] h-6 bg-white/20 mr-6"></div>
+                
+                {/* License Number */}
+                <span className="text-gray-300 font-bold text-[14px] tracking-[0.15em] uppercase whitespace-nowrap group-hover:text-white transition-colors">
+                  TSSA FS-R-50611
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Additional Grid Badges */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-12 gap-y-8 w-full lg:w-auto">
             {trustItems.map((item, index) => (
               <div 
                 key={index} 
@@ -76,14 +94,10 @@ const TrustBar: React.FC = () => {
                   {item.icon}
                 </div>
                 <div className="flex flex-col">
-                  <span className={`text-[15px] font-black text-navy tracking-tight whitespace-nowrap leading-none mb-1 ${
-                    item.isHighContrast ? 'border-b-2 border-safety-orange' : ''
-                  }`}>
+                  <span className="text-[14px] font-black text-navy tracking-tight whitespace-nowrap leading-none mb-1 group-hover:text-safety-orange transition-colors">
                     {item.label}
                   </span>
-                  <span className={`text-[10px] font-bold tracking-[0.1em] ${
-                    item.isHighContrast ? 'text-navy font-black' : 'text-gray-400'
-                  }`}>
+                  <span className="text-[10px] font-bold tracking-[0.1em] text-gray-400">
                     {item.subLabel}
                   </span>
                 </div>
