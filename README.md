@@ -1,20 +1,20 @@
-# Project: York Eco Home Services - Digital Authority Revamp 🚀
-**Status:** Alpha / Concept Phase  
-**Client:** York Eco Home Services Inc. (Toronto/GTA)
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-## 🎯 The Objective
-Modernize the digital storefront to align with York Eco's 5-star reputation. The primary goal is to capture high-intent traffic for **Heat Pump Rebates** and **Emergency HVAC repairs** in the Toronto market.
+# Run and deploy your AI Studio app
 
-## 🛠️ Performance Tech Stack
-- **AI Framework:** Google AI Studio (Gemini 1.5 Pro) for high-conversion copy and layout.
-- **Frontend:** HTML5 & Tailwind CSS (Zero-bloat code).
-- **Version Control:** GitHub (Secured source code).
-- **Deployment:** Vercel (Global Edge Network for <1s load times).
+This contains everything you need to run your app locally.
 
-## 🚀 Key Performance Indicators (KPIs)
-* **Trust Factor:** Integrated HomeStars 5-star badge and TSSA License (FS-R-50611).
-* **Rebate Capture:** Prominent "Save $7,100" CTAs to drive high-ticket installations.
-* **Mobile Efficiency:** Sticky "Emergency Call" navigation for freezing Toronto winters.
+View your app in AI Studio: https://ai.studio/apps/drive/1A0qmbGcRKt0ae6_uPN-_68OKwZSZ8XOF
 
-## 📂 Deployment Link
-[INSERT YOUR VERCEL URL HERE]
+## Run Locally
+
+**Prerequisites:**  Node.js
+
+
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`
