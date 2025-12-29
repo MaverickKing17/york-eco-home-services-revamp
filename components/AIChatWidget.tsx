@@ -85,22 +85,22 @@ const AIChatWidget: React.FC = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-[100] font-sans">
-      {/* High-Impact Floating Toggle Button */}
+      {/* High-Impact Floating Toggle Button - Enhanced for "Pop" */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="group relative flex items-center bg-safety-orange text-white p-5 rounded-full shadow-[0_15px_40px_rgba(255,133,27,0.5)] transition-all hover:scale-110 active:scale-95 border-2 border-white/20"
+          className="group relative flex items-center bg-safety-orange text-white p-5 rounded-full shadow-[0_20px_50px_rgba(255,133,27,0.6)] transition-all hover:scale-110 active:scale-95 border-2 border-white/30"
           aria-label="Open AI Chat Assistant"
         >
-          {/* Pulsing ring for visibility */}
-          <div className="absolute inset-0 rounded-full bg-safety-orange animate-ping opacity-25 -z-10"></div>
+          {/* Constant pulse for attention */}
+          <div className="absolute inset-0 rounded-full bg-safety-orange animate-ping opacity-30 -z-10"></div>
           
-          <svg className="w-8 h-8 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-8 h-8 drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
           </svg>
 
-          {/* Label that appears on hover */}
-          <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-3 transition-all duration-300 font-black uppercase text-sm whitespace-nowrap tracking-widest">
+          {/* Label with visibility animation */}
+          <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-3 transition-all duration-300 font-black uppercase text-sm whitespace-nowrap tracking-[0.2em]">
             Chat with AI
           </span>
         </button>
@@ -109,7 +109,7 @@ const AIChatWidget: React.FC = () => {
       {/* Premium Chat Window */}
       {isOpen && (
         <div className="bg-white w-[360px] sm:w-[420px] h-[580px] rounded-[2.5rem] shadow-[0_30px_80px_rgba(10,25,47,0.3)] flex flex-col overflow-hidden border border-gray-100 animate-fade-in-up">
-          {/* Header with Blur */}
+          {/* Header */}
           <div className="bg-navy p-6 flex justify-between items-center text-white relative">
             <div className="absolute inset-0 bg-gradient-to-r from-navy to-navy/80 backdrop-blur-md opacity-90 -z-10"></div>
             <div className="flex items-center space-x-3">

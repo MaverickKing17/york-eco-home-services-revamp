@@ -17,7 +17,7 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative pt-32 pb-24 overflow-hidden bg-navy min-h-[95vh] flex items-center" aria-labelledby="hero-heading">
-      {/* High-Relevance Background: Trusted Professional Technician */}
+      {/* High-Relevance Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-navy/60 z-10"></div>
         <img 
@@ -43,13 +43,13 @@ const Hero: React.FC = () => {
             <span className="tracking-[0.2em] uppercase text-gray-100 group-hover:text-white transition-colors">TSSA FS-R-50611</span>
           </div>
           
-          {/* Headline: Corrected Company Name */}
+          {/* Headline */}
           <h1 id="hero-heading" className="text-5xl md:text-[5.5rem] font-black text-white leading-[0.9] mb-10 animate-fade-in-up delay-100 tracking-tighter drop-shadow-2xl">
             York Eco-Home <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-l from-safety-orange via-orange-400 to-yellow-300">Services.</span>
           </h1>
           
-          {/* Subtext: Maximum Visibility */}
+          {/* Subtext */}
           <div className="relative mb-12 animate-fade-in-up delay-200 max-w-lg">
             <div className="absolute -inset-x-8 -inset-y-6 bg-navy/40 blur-3xl rounded-[3rem] -z-10"></div>
             <p className="text-white text-xl md:text-2xl leading-snug font-semibold border-r-4 border-safety-orange pr-8 drop-shadow-lg">
@@ -58,9 +58,8 @@ const Hero: React.FC = () => {
             </p>
           </div>
           
-          {/* Action Buttons: Ultra-Premium Redesign */}
-          <div className="flex flex-col sm:flex-row space-y-5 sm:space-y-0 sm:space-x-6 animate-fade-in-up delay-300 justify-end w-full">
-            {/* Redesigned Premium Phone Button */}
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row space-y-5 sm:space-y-0 sm:space-x-6 animate-fade-in-up delay-300 justify-end w-full mb-16">
             <a 
               href="tel:18882276566" 
               className="group relative bg-white/5 backdrop-blur-md hover:bg-white text-white hover:text-navy border border-white/20 px-10 py-5 rounded-3xl font-black text-lg transition-all duration-300 flex items-center justify-center space-x-4 active:scale-95 shadow-xl order-2 sm:order-1"
@@ -85,30 +84,42 @@ const Hero: React.FC = () => {
             </a>
           </div>
           
-          {/* Refined Trust Badge: Matching User Screenshot Aesthetic */}
-          <div className="mt-20 flex flex-col items-end animate-fade-in delay-500">
-             <div className="group flex items-center p-6 sm:p-8 bg-white/10 backdrop-blur-xl rounded-[2.5rem] border border-white/20 shadow-[0_15px_45px_rgba(0,0,0,0.3)] transition-all hover:bg-white/[0.15]">
-               {/* Large "5.0" Display */}
-               <div className="text-5xl sm:text-6xl font-black text-white pr-8 select-none">5.0</div>
+          {/* ULTRA PREMIUM HOMESTARS ELITE BADGE - Redesigned to match requested aesthetic */}
+          <div className="animate-fade-in delay-500 relative group">
+             {/* Glowing light sweep animation */}
+             <div className="absolute -inset-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-[2.5rem] blur-sm -z-10 group-hover:via-white/50 transition-all duration-1000"></div>
+             
+             <div className="flex items-center p-8 sm:p-10 bg-white/5 backdrop-blur-3xl rounded-[2.5rem] border border-white/20 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 hover:bg-white/10 hover:border-white/30 hover:-translate-y-1">
                
-               {/* Vertical Divider line */}
-               <div className="h-12 w-[1px] bg-white/20"></div>
+               {/* Massive Rating Number */}
+               <div className="text-6xl sm:text-7xl font-black text-white pr-10 tracking-tighter select-none drop-shadow-2xl">
+                 5.0
+               </div>
                
-               {/* Stars & Label Layout */}
-               <div className="flex flex-col items-start pl-8">
-                  {/* High Saturation Stars */}
-                  <div className="flex space-x-1 mb-2">
+               {/* Elegant Vertical Divider */}
+               <div className="h-20 w-[1px] bg-white/20"></div>
+               
+               {/* stars and Text Layout */}
+               <div className="flex flex-col items-start pl-10">
+                  {/* High-Impact Stars with Glows */}
+                  <div className="flex space-x-1.5 mb-3">
                     {[1,2,3,4,5].map(s => (
-                      <svg key={s} className="w-5 h-5 text-[#FF851B] fill-current drop-shadow-[0_0_8px_rgba(255,133,27,0.5)]" viewBox="0 0 20 20">
+                      <svg key={s} className="w-6 h-6 text-[#FF851B] fill-current drop-shadow-[0_0_12px_rgba(255,133,27,0.8)]" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
                     ))}
                   </div>
-                  {/* Styled HomeStars Label */}
-                  <div className="text-[12px] uppercase font-black text-gray-100 tracking-[0.25em] drop-shadow-md">
+                  
+                  {/* Styled HomeStars Label - Ultra Bold & Spaced */}
+                  <div className="text-[14px] uppercase font-black text-white tracking-[0.3em] drop-shadow-md whitespace-nowrap">
                     HomeStars Elite
                   </div>
                </div>
+             </div>
+             
+             {/* Verification Tooltip Hook */}
+             <div className="absolute -top-6 -left-4 bg-navy px-4 py-2 rounded-xl text-[10px] font-black text-white uppercase tracking-widest border border-white/10 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+               Toronto's #1 Rated
              </div>
           </div>
         </div>
