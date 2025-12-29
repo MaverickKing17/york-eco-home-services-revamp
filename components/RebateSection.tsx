@@ -28,7 +28,7 @@ const RebateSection: React.FC = () => {
         <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
           <div className="lg:w-1/2 text-white">
             <div className="inline-block px-4 py-1 rounded-full bg-white/20 text-white font-black text-[10px] uppercase tracking-[0.2em] mb-6 border border-white/30">
-              Government Incentives 2024
+              Government Incentives 2025
             </div>
             <h2 className="text-4xl md:text-6xl font-black mb-8 leading-[1.1] tracking-tighter">
               Stop Overpaying <br/>
