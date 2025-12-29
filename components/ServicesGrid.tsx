@@ -84,11 +84,8 @@ const ServicesGrid: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleCardClick = (index: number, title: string) => {
-    // Per user request: simulate expansion with an alert
-    alert(`Expanding detailed view for: ${title}`);
-    
-    // UI-based expansion for a more professional feel
+  const handleCardClick = (index: number) => {
+    // UI-based expansion for a professional feel without annoying alerts
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
@@ -136,13 +133,13 @@ const ServicesGrid: React.FC = () => {
             return (
               <div 
                 key={index}
-                onClick={() => handleCardClick(index, service.title)}
+                onClick={() => handleCardClick(index)}
                 style={{ transform: `translateY(${translateY}px)` }}
                 className={`p-10 rounded-[2.5rem] transition-all duration-500 ease-out border flex flex-col will-change-transform group cursor-pointer overflow-hidden ${getThemeClasses(service.theme, isExpanded)}`}
                 role="button"
                 aria-expanded={isExpanded}
                 tabIndex={0}
-                onKeyPress={(e) => e.key === 'Enter' && handleCardClick(index, service.title)}
+                onKeyPress={(e) => e.key === 'Enter' && handleCardClick(index)}
               >
                 <div className="flex justify-between items-start mb-6">
                   <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 group-hover:rotate-3 ${getIconContainerClasses(service.theme)}`}>
