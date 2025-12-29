@@ -6,6 +6,7 @@ import { Chat } from '@google/genai';
 interface Message {
   role: 'user' | 'model';
   text: string;
+  isAction?: boolean;
 }
 
 const AIChatWidget: React.FC = () => {
@@ -24,7 +25,6 @@ const AIChatWidget: React.FC = () => {
     }
   }, [isOpen]);
 
-  // Use smooth scroll when messages or typing status changes
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTo({
@@ -41,16 +41,46 @@ const AIChatWidget: React.FC = () => {
     const userMessage = input.trim();
     setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
     setInput('');
-    
-    // Start typing indicator
     setIsTyping(true);
 
     try {
       if (!chatSession.current) chatSession.current = startAIChatSession();
       const response = await chatSession.current.sendMessage({ message: userMessage });
-      const botText = response.text || "I'm sorry, I couldn't process that. Please call us at 1-888-227-6566 for immediate assistance.";
-      setMessages(prev => [...prev, { role: 'model', text: botText }]);
+      
+      let botText = response.text || "";
+      let hasAction = false;
+
+      // Check for tool calls
+      if (response.functionCalls && response.functionCalls.length > 0) {
+        for (const fc of response.functionCalls) {
+          if (fc.name === 'startSavingsAssessment') {
+            hasAction = true;
+            // Send feedback back to model to update context
+            await chatSession.current.sendMessage({ 
+              message: "Tool suggested to user: startSavingsAssessment" 
+            });
+          }
+        }
+      }
+
+      if (botText) {
+        setMessages(prev => [...prev, { role: 'model', text: botText }]);
+      }
+
+      if (hasAction) {
+        setMessages(prev => [...prev, { 
+          role: 'model', 
+          text: 'I recommend using our Savings Assessment tool for precise estimates.', 
+          isAction: true 
+        }]);
+      }
+
+      if (!botText && !hasAction) {
+        setMessages(prev => [...prev, { role: 'model', text: "I'm sorry, I couldn't process that. Please call us at 1-888-227-6566 for immediate assistance." }]);
+      }
+
     } catch (err) {
+      console.error(err);
       setMessages(prev => [...prev, { role: 'model', text: "Service temporarily unavailable. Please call us for 24/7 support at 1-888-227-6566." }]);
     } finally {
       setIsTyping(false);
@@ -109,7 +139,7 @@ const AIChatWidget: React.FC = () => {
             {messages.map((msg, i) => (
               <div 
                 key={i} 
-                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}
+                className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'} animate-fadeIn`}
               >
                 <div 
                   className={`max-w-[85%] p-3 rounded-2xl text-sm shadow-sm leading-relaxed ${
@@ -120,10 +150,23 @@ const AIChatWidget: React.FC = () => {
                 >
                   {msg.text}
                 </div>
+                {msg.isAction && (
+                  <button 
+                    onClick={() => {
+                      window.location.hash = '#ai-tool';
+                      setIsOpen(false);
+                    }}
+                    className="mt-2 bg-safety-orange text-white px-4 py-2 rounded-xl text-xs font-bold shadow-md hover:bg-orange-600 transition-colors flex items-center space-x-2 group"
+                  >
+                    <span>Begin Free Assessment</span>
+                    <svg className="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </button>
+                )}
               </div>
             ))}
             
-            {/* Visual Typing Indicator */}
             {isTyping && (
               <div className="flex flex-col space-y-1 animate-fadeIn">
                 <div className="flex justify-start">

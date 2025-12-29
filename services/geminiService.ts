@@ -1,5 +1,5 @@
 
-import { GoogleGenAI, Type, Chat } from "@google/genai";
+import { GoogleGenAI, Type, Chat, FunctionDeclaration } from "@google/genai";
 
 const MODEL_NAME = 'gemini-3-flash-preview';
 
@@ -9,6 +9,21 @@ export interface SavingsReport {
   eligibleRebates: string;
   proTip: string;
 }
+
+const startSavingsAssessmentDeclaration: FunctionDeclaration = {
+  name: 'startSavingsAssessment',
+  parameters: {
+    type: Type.OBJECT,
+    description: 'Trigger the interactive Home Energy Savings Assessment tool for the user.',
+    properties: {
+      reason: {
+        type: Type.STRING,
+        description: 'Brief reason why the assessment is being suggested (e.g., user asked about rebates).',
+      },
+    },
+    required: ['reason'],
+  },
+};
 
 const COMPANY_KNOWLEDGE = `
 You are the official AI Assistant for York Eco Home Services Inc. 
@@ -27,7 +42,8 @@ Your Goal:
 1. Be professional, friendly, and expert.
 2. Answer questions accurately using the knowledge above.
 3. If a user asks for a quote or specific repair advice, encourage them to call 1-888-227-6566 or fill out the assessment form on the page.
-4. Keep responses concise and formatted for a chat bubble.
+4. If a user asks about savings, rebates, or efficiency, use the 'startSavingsAssessment' tool to offer them the interactive tool on the page.
+5. Keep responses concise and formatted for a chat bubble.
 `;
 
 export const startAIChatSession = (): Chat => {
@@ -36,6 +52,7 @@ export const startAIChatSession = (): Chat => {
     model: MODEL_NAME,
     config: {
       systemInstruction: COMPANY_KNOWLEDGE,
+      tools: [{ functionDeclarations: [startSavingsAssessmentDeclaration] }],
     },
   });
 };
